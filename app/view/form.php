@@ -17,16 +17,16 @@ if ($_GET['page'] == 'edit') {
     $dado = $_SESSION['dados'][($id - 1)];
     $mensagem = "Ediçao de Clientes";
     $url = "app/controller/edit.php";
-    $textButton = "Editar";
+    $action = "editar";
 } else {
     $mensagem = "Cadastro de Clientes";
     $url = "app/controller/cadastro.php";
-    $textButton = "Cadastrar";
+    $action="cadastrar";
 }
 ?>
 
 <div class="form">
-    <form action="<?php echo $url; ?>" method="POST" id="form-cliente">
+    <form action="app/controller/controller.php?action=<?php echo $action?>" method="POST" id="form-cliente">
         <div>
             <h1><b>
                     <center><?php echo $mensagem ?> </center>
@@ -124,7 +124,9 @@ if ($_GET['page'] == 'edit') {
         }
         ?>
         <div class="form-group">
-            <button name="cadastrar" id="cadastrar" class="btn btn-success"><?php echo $textButton; ?></button>
+            <button name="cadastrar" id="cadastrar" class="btn btn-success">
+                Enviar
+            </button>
             <button type="reset" name="reset" id="reset" class="btn btn-primary">Limpar</button>
         </div>
     </form>

@@ -31,7 +31,6 @@ $dados = [];
                 <tr>
                     <?php
                     while ($resul = mysqli_fetch_assoc($query)) {
-                        array_push($dados, $resul);
                     ?>
                         <td scope="row"><?php echo $resul['nome']; ?></td>
                         <td>
@@ -74,8 +73,6 @@ $dados = [];
 
                 </tr> <?php
                     }
-                    
-                    $_SESSION['dados'] = $dados;
                         ?>
             </tbody>
         </table>

@@ -2,8 +2,8 @@
 session_destroy();
 session_start();
 require_once '../model/conexao.php';
-// require_once './classes/Usuario.php';
-
+require_once '../class/Usuario.php';
+//recebndo dados via post
 $nome = $_POST['nome'];
 $sobrenome = $_POST['sobrenome'];
 $email = $_POST['email'];
@@ -17,8 +17,12 @@ $telefone2 = $_POST['telefone2'];
 $senha = $_POST['senha'];
 $senhaConfirmar = $_POST['confirmaSenha'];
 
-$erros = [];
 
+echo $usuario->telefone1;
+//echo $tstNome->getsobrenome();
+
+$erros = [];
+//validação dos dados
 if (!$nome) {
     array_push($erros, "Necessario preencher o campo nome");
 }
@@ -60,40 +64,16 @@ if ($senhaConfirmar != $senha) {
 }
 
 $_SESSION['erros'] = $erros;
-
+//se ouver erros será redirecionado a pagina de cadastro com os respectivos erros
 if (count($erros) > 0) {
     header('Location: ../../index.php?page=cadastrar');
 } else {
-    $sql = "INSERT INTO 
-            clientes(
-                nome,
-                sobrenome, 
-                email,
-                cep,
-                tipoEnd, 
-                nomeRua, 
-                numero, 
-                bairro, 
-                telefone1, 
-                telefone2, 
-                senha, 
-                situation
-                ) 
-            VALUES (
-                '$nome',
-                '$sobrenome', 
-                '$email',
-                '$cep', 
-                '$tipoEnd', 
-                '$nomeRua', 
-                '$numero', 
-                '$bairro',
-                '$telefone1',
-                '$telefone2', 
-                '$senha',
-                0)";
-     mysqli_query($connect, $sql) or die(mysqli_error("erro ao inserir os dados"));
+    $usuario = new Usuario($nome, $sobrenome,$email,$cep,$tipoEnd,$nomeRua,$numero,$bairro,$telefone1,$telefone2,$senha);
+    $msg = $usuario->cadastrar();
+    echo $msg;
+    //inserção dos dados na tabela e redirecionamento a pagina home
+     //mysqli_query($connect, $sql) or die(mysqli_error("erro ao inserir os dados"));
      session_destroy();
-     header('Location: ../../index.php?page=home');
+     //header('Location: ../../index.php?page=home');
 }
 

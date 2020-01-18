@@ -14,20 +14,16 @@
 <body>
     <div class="container-grid">
         <header>
-            <div class="logo" name="logo">
-
-            </div>
             <div class="menu">
                 <ul>
                     <li><a href="index.php?page=home">Home</a></li>
                     <li><a href="index.php?page=cadastrar">Cadastrar</a></li>
-                    <li><a href="index.php?page=editar">Editar</a></li>
-                    <li><a href="index.php?page=excluir">Excluir</a></li>
                 </ul>
             </div>
         </header>
         <main>
             <?php
+            
             $page = $_GET['page'];
             if ($page == 'home') {
                 require_once 'app/view/home.php';
@@ -36,11 +32,10 @@
                 require_once 'app/view/form.php';
             }
             if ($page == 'edit') {
-                require_once 'app/view/form.php';
+                require_once 'app/controller/controller.php';
             }
             ?>
         </main>
-        <footer></footer>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
