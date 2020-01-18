@@ -2,7 +2,7 @@
 session_start();
 require '../class/Usuario.php';
 $action = $_GET['action'];
-
+//recebemitendo de dados do formulario
 $nome = $_POST['nome'];
 $sobrenome = $_POST['sobrenome'];
 $email = $_POST['email'];
@@ -15,10 +15,11 @@ $telefone1 = $_POST['telefone1'];
 $telefone2 = $_POST['telefone2'];
 $senha = $_POST['senha'];
 $senhaConfirmar = $_POST['confirmaSenha'];
-
+//determinação do fluxo de acordo com a action recebida via urlencoded
 if ($action === 'delete') {
     $id = ($_GET['id']);
-    $_SESSION['msgSuccess'] = Usuario::delete(($id));
+    $mensagem = Usuario::delete(($id));
+    $_SESSION['msgSuccess'] = $mensagem;
     header('Location: ../../index.php?page=home');
 }
 if ($action === 'edit' || $action === 'cadastrar') {
@@ -67,21 +68,22 @@ if ($action === 'edit' || $action === 'cadastrar') {
 
     $_SESSION['erros'] = $erros;
     if (count($erros) > 0) {
-        if($action === "edit"){
-            header('Location: ../../index.php?page=edit&id='.$id);
-        }else if($action === "cadastrar"){
+        if ($action === "edit") {
+            header('Location: ../../index.php?page=edit&id=' . $id);
+        } else if ($action === "cadastrar") {
             header('Location: ../../index.php?page=cadastrar');
         }
-        
-     }else{
-        if($action === "edit"){
+    } else {
+        if ($action === "edit") {
+            //instancia um usuario e edita ele na tabela com o parametro $id
             $usuario = new Usuario($nome, $sobrenome, $email, $cep, $tipoEnd, $nomeRua, $numero, $bairro, $telefone1, $telefone2, $senha);
             $_SESSION['msgSuccess'] = $usuario->editar($id);
             header('Location: ../../index.php?page=home');
-        }else if($action === "cadastrar"){
+        } else if ($action === "cadastrar") {
+            //instancia um novo usuario
             $usuario = new Usuario($nome, $sobrenome, $email, $cep, $tipoEnd, $nomeRua, $numero, $bairro, $telefone1, $telefone2, $senha);
-            $_SESSION['msgSuccess'] = $usuario->cadastrar();
+            $mensagem = $usuario->cadastrar();
             header('Location: ../../index.php?page=home');
         }
-     }
+    }
 }

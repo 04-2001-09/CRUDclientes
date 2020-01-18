@@ -1,4 +1,5 @@
 <?php
+//sessão para receber os dados vindos da pagina Controller via sesão
 session_start();
 require 'app/model/Banco.php';
 if (isset($_SESSION['erros'])) {
@@ -13,6 +14,7 @@ if (isset($_SESSION['erros'])) {
     
 }
 unset($_SESSION['erros']);
+//caso haja um id vindo por meio de urlencoded execute uma consulta no sql para encontrar o usuario que será editado
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $sql="SELECT * FROM clientes WHERE id = '$id'";
@@ -135,11 +137,12 @@ if (isset($_GET['id'])) {
 </div>
 <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
 <script type="text/javascript">
+//mascaras de telefone e CEP
     $(document).ready(function(){
-      $('#telefone1').mask('(00) 0000-0000');
+      $('#telefone1').mask('(00) 00000-0000');
       });
     $(document).ready(function(){
-      $('#telefone2').mask('(00) 0000-0000');
+      $('#telefone2').mask('(00) 00000-0000');
       });
     $(document).ready(function(){
       $('#cep').mask('00000-000');

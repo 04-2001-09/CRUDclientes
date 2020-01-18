@@ -1,7 +1,7 @@
 <?php
 require_once "../model/Banco.php";
 
-
+//criação da classe para lidar com ações que mechem diretamente com o objeto como cadastro, edição e exclusão
 class Usuario
 {
     private $nome;

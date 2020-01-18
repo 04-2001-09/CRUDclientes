@@ -1,11 +1,15 @@
 <?php
 session_start();
-require 'app/model/conexao.php';
-
+require 'app/model/Banco.php';
+//query de seleção das linhas na tabela sql
 $sql = "SELECT * FROM clientes WHERE situation = 0";
-$query = mysqli_query($connect, $sql) or die(mysqli_error("Erro na listagem de clientes"));
-$dados = [];
+$query = mysqli_query(Banco::connect(), $sql) or die(mysqli_error("Erro na listagem de clientes"));
+if(($_SESSION['msgSuccess'])){
+    var_dump($_SESSION['msgSuccess']);
+    echo"<div class='alert alert-success' role='alert'>".$_SESSION['msgSuccess']."</div>";
+}
 ?>
+
 <div class="card">
     <div class="card-body">
 
@@ -32,6 +36,7 @@ $dados = [];
                 <tbody>
                     <tr>
                         <?php
+                        //criação do corpo de uma tabela dinamicamente
                         while ($resul = mysqli_fetch_assoc($query)) {
                             array_push($dados, $resul);
                         ?>
