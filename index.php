@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -15,16 +14,30 @@
 <body>
     <div class="container-grid">
         <header>
+            <div class="head">
+                <h1>Gerenciamento de Usuarios</h1>
+            </div>
             <div class="menu">
                 <ul>
-                    <li><a href="index.php?page=home">Home</a></li>
-                    <li><a href="index.php?page=cadastrar">Cadastrar</a></li>
+
+                    <li>
+                        <a href="index.php?page=home">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.php?page=cadastrar">
+                            Cadastrar
+                        </a>
+                    </li>
+
+
                 </ul>
             </div>
         </header>
         <main>
             <?php
-            
+
             $page = $_GET['page'];
             if ($page == 'home') {
                 require_once 'app/view/home.php';
@@ -38,7 +51,6 @@
             ?>
         </main>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="public/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="public/js/jquery.mask.min.js"></script>

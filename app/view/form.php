@@ -19,7 +19,8 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $sql="SELECT * FROM clientes WHERE id = '$id'";
     $query = mysqli_query(Banco::connect(),$sql)or die(mysqli_error("Erro ao buscar o usuario"));
-    $dado = mysqli_fetch_array($query); 
+    $dado = mysqli_fetch_array($query);
+    $mensagem = "Edição de Clientes" ;
     $action = "edit";
     $url = "app/controller/controller.php?action=".$action."&id=".$id;
 } else {

@@ -4,9 +4,9 @@ require 'app/model/Banco.php';
 //query de seleção das linhas na tabela sql
 $sql = "SELECT * FROM clientes WHERE situation = 0";
 $query = mysqli_query(Banco::connect(), $sql) or die(mysqli_error("Erro na listagem de clientes"));
-if(($_SESSION['msgSuccess'])){
+if (($_SESSION['msgSuccess'])) {
     var_dump($_SESSION['msgSuccess']);
-    echo"<div class='alert alert-success' role='alert'>".$_SESSION['msgSuccess']."</div>";
+    echo "<div class='alert alert-success' role='alert'>" . $_SESSION['msgSuccess'] . "</div>";
 }
 ?>
 
@@ -27,8 +27,6 @@ if(($_SESSION['msgSuccess'])){
                         <th scope="col">Bairro</th>
                         <th scope="col">Telefone 1</th>
                         <th scope="col">Telefone 2</th>
-                        <th scope="col">id</th>
-                        <th scope="col">situation</th>
                         <th scope="col">Editar</th>
                         <th scope="col">Excluir</th>
                     </tr>
@@ -69,12 +67,6 @@ if(($_SESSION['msgSuccess'])){
                                 <?php echo $resul['telefone2']; ?>
                             </td>
                             <td>
-                                <?php echo $resul['id']; ?>
-                            </td>
-                            <td>
-                                <?php echo $resul['situation']; ?>
-                            </td>
-                            <td>
                                 <a href="./index.php?page=edit&id=<?php echo $resul['id']; ?>">
                                     <button class='btn btn-primary'>Editar</button>
                                 </a>
@@ -86,9 +78,9 @@ if(($_SESSION['msgSuccess'])){
                             </td>
 
                     </tr>
-                     <?php
+                <?php
                         }
-                    ?>
+                ?>
                 </tbody>
             </table>
         </div>
