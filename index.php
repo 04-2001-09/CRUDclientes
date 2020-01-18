@@ -12,10 +12,10 @@
 </head>
 
 <body>
-    <div class="container-grid">
+    <div class="container-fluid">
         <header>
             <div class="head">
-                <h1>Gerenciamento de Usuarios</h1>
+                <h1><img src="public/img/head.png" width="4%"> Gerenciamento de Usuarios</h1>
             </div>
             <div class="menu">
                 <ul>
@@ -37,28 +37,32 @@
         </header>
         <main>
             <?php
-
             $page = $_GET['page'];
             if ($page == 'home') {
                 require_once 'app/view/home.php';
             }
-            if ($page == 'cadastrar') {
+            else if ($page == 'cadastrar') {
                 require_once 'app/view/form.php';
             }
-            if ($page == 'edit') {
+            else if ($page == 'edit') {
                 require_once 'app/view/form.php';
+            }else{
+                require_once 'app/view/home.php';
             }
             ?>
         </main>
+        <footer class="footer mt-4">
+            <div class="text-center">
+                <span>
+                    &#x2117; - Desenvolvido por Allan Aparecido Milani - 2020
+                </span>
+            </div>
+        </footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="public/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="public/js/jquery.mask.min.js"></script>
-    <?php
 
-
-
-    ?>
 </body>
 
 </html>

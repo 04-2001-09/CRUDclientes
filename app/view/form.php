@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
 }
 ?>
 
-<div class="form">
+<div class="form mt-4">
     <form action="<?php echo $url;?>" method="POST" id="form-cliente">
         <div>
             <h1><b>

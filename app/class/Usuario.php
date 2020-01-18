@@ -67,12 +67,14 @@ class Usuario
             '$this->senha',
             0)";
         mysqli_query(Banco::connect(), $sql) or die(mysqli_error("erro ao inserir os dados"));
+        return "Usuario cadastrado com sucesso";
     }
 
     static public function delete($id)
     {
         $sql = "UPDATE clientes SET situation = 1 WHERE id = '$id'";
         mysqli_query(Banco::connect(), $sql) or die(mysqli_error("erro ao inserir os dados"));
+        return "Usuario deletado com sucesso";
     }
     public function editar($id)
     {

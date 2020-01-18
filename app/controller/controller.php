@@ -82,7 +82,7 @@ if ($action === 'edit' || $action === 'cadastrar') {
         } else if ($action === "cadastrar") {
             //instancia um novo usuario
             $usuario = new Usuario($nome, $sobrenome, $email, $cep, $tipoEnd, $nomeRua, $numero, $bairro, $telefone1, $telefone2, $senha);
-            $mensagem = $usuario->cadastrar();
+            $_SESSION['msgSuccess'] = $usuario->cadastrar();
             header('Location: ../../index.php?page=home');
         }
     }
