@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'app/model/Banco.php';
 if (isset($_SESSION['erros'])) {
     echo "<div id='mensagem'>";
     foreach ($_SESSION['erros'] as $erro) {
@@ -12,21 +13,22 @@ if (isset($_SESSION['erros'])) {
     
 }
 unset($_SESSION['erros']);
-if ($_GET['page'] == 'edit') {
+if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $dado = $_SESSION['dados'][($id - 1)];
-    $mensagem = "Ediçao de Clientes";
-    $url = "app/controller/edit.php";
-    $action = "editar";
+    $sql="SELECT * FROM clientes WHERE id = '$id'";
+    $query = mysqli_query(Banco::connect(),$sql)or die(mysqli_error("Erro ao buscar o usuario"));
+    $dado = mysqli_fetch_array($query); 
+    $action = "edit";
+    $url = "app/controller/controller.php?action=".$action."&id=".$id;
 } else {
     $mensagem = "Cadastro de Clientes";
-    $url = "app/controller/cadastro.php";
     $action="cadastrar";
+    $url = "app/controller/controller.php?action=".$action;
 }
 ?>
 
 <div class="form">
-    <form action="app/controller/controller.php?action=<?php echo $action?>" method="POST" id="form-cliente">
+    <form action="<?php echo $url;?>" method="POST" id="form-cliente">
         <div>
             <h1><b>
                     <center><?php echo $mensagem ?> </center>
@@ -55,7 +57,7 @@ if ($_GET['page'] == 'edit') {
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Cep:</label>
-                <input type="text" class="form-control" id="cep" name="cep" value="<?php if ($dado) echo ($dado['cep']);  ?>" placeholder="Digite seu cep..." maxlength="9" minlength="9">
+                <input type="text" class="form-control" id="cep" name="cep" value="<?php if ($dado) echo ($dado['cep']);  ?>" maxlength="9" placeholder="Digite seu cep..." maxlength="9" minlength="9">
 
             </div>
             <div class="form-group col-md-4">
@@ -96,12 +98,12 @@ if ($_GET['page'] == 'edit') {
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>Telefone</label>
-                <input type="Tel" class="form-control" id="telefone1" name="telefone1" value="<?php if ($dado) echo ($dado['telefone1']);  ?>" placeholder="Digite seu telefone...">
+                <input type="Tel" class="form-control" id="telefone1" name="telefone1" value="<?php if ($dado) echo ($dado['telefone1']);  ?>" maxlength="14" placeholder="Digite seu telefone...">
 
             </div>
             <div class="form-group col-md-6">
                 <label>Outro telefone:</label>
-                <input type="Tel" class="form-control" id="telefone2" name="telefone2" value="<?php if ($dado) echo ($dado['telefone2']);  ?>" placeholder="Digite outro telefone...">
+                <input type="Tel" class="form-control" id="telefone2" name="telefone2" value="<?php if ($dado) echo ($dado['telefone2']);  ?>" maxlength="14" placeholder="Digite outro telefone...">
 
             </div>
         </div>
@@ -131,3 +133,16 @@ if ($_GET['page'] == 'edit') {
         </div>
     </form>
 </div>
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+      $('#telefone1').mask('(00) 0000-0000');
+      });
+    $(document).ready(function(){
+      $('#telefone2').mask('(00) 0000-0000');
+      });
+    $(document).ready(function(){
+      $('#cep').mask('00000-000');
+      });
+      $.ajax();
+</script>

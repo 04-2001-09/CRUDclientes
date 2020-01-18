@@ -32,7 +32,7 @@
                 require_once 'app/view/form.php';
             }
             if ($page == 'edit') {
-                require_once 'app/controller/controller.php';
+                require_once 'app/view/form.php';
             }
             ?>
         </main>

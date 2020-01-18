@@ -74,15 +74,24 @@ class Usuario
         $sql = "UPDATE clientes SET situation = 1 WHERE id = '$id'";
         mysqli_query(Banco::connect(), $sql) or die(mysqli_error("erro ao inserir os dados"));
     }
-    static public function listaClientes()
+    public function editar($id)
     {
-        $dados = [];
-        $sql = "SELECT * FROM clientes WHERE situation = 0";
-        $query = mysqli_query(Banco::connect(), $sql) or die(mysqli_error("Erro na listagem de clientes"));
-        while ($resul = mysqli_fetch_assoc($query)){
-            array_push($dados, $resul);
-        } 
-        return $dados;
+        $sql = "UPDATE
+                    clientes
+                 SET
+                    nome = '$this->nome',
+                    sobrenome = '$this->sobrenome', 
+                    email = '$this->email',
+                    cep = '$this->cep',
+                    tipoEnd = '$this->tipoEnd', 
+                    nomeRua = '$this->nomeRua', 
+                    numero = '$this->numero', 
+                    bairro = '$this->bairro', 
+                    telefone1 = '$this->telefone1', 
+                    telefone2 = '$this->telefone2'
 
+                    WHERE id = '$id'";
+        mysqli_query(Banco::connect(), $sql) or die(mysqli_error("erro ao inserir os dados"));
+        return "Usuario editado com sucesso";
     }
 }

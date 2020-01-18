@@ -1,29 +1,28 @@
 <?php
-    session_start();
-    require '../class/Usuario.php';
-    $action = $_GET['action'];
-    
-    $nome = $_POST['nome'];
-    $sobrenome = $_POST['sobrenome'];
-    $email = $_POST['email'];
-    $cep = $_POST['cep'];
-    $tipoEnd = $_POST['tipoEnd'];
-    $nomeRua = $_POST['nomeRua'];
-    $numero = $_POST['numero'];
-    $bairro = $_POST['bairro'];
-    $telefone1 = $_POST['telefone1'];
-    $telefone2 = $_POST['telefone2'];
-    $senha = $_POST['senha'];
-    $senhaConfirmar = $_POST['confirmaSenha'];
+session_start();
+require '../class/Usuario.php';
+$action = $_GET['action'];
 
-    if($action == 'delete'){
-        $id = $_GET['id'];
-        $_SESSION['msgSuccess'] = Usuario::delete(($id-1));
-        header('Location: ../../index.php?page=home');
-    }
-    $resul = Usuario::listaClientes();
-    
-    
+$nome = $_POST['nome'];
+$sobrenome = $_POST['sobrenome'];
+$email = $_POST['email'];
+$cep = $_POST['cep'];
+$tipoEnd = $_POST['tipoEnd'];
+$nomeRua = $_POST['nomeRua'];
+$numero = $_POST['numero'];
+$bairro = $_POST['bairro'];
+$telefone1 = $_POST['telefone1'];
+$telefone2 = $_POST['telefone2'];
+$senha = $_POST['senha'];
+$senhaConfirmar = $_POST['confirmaSenha'];
+
+if ($action === 'delete') {
+    $id = ($_GET['id']);
+    $_SESSION['msgSuccess'] = Usuario::delete(($id));
+    header('Location: ../../index.php?page=home');
+}
+if ($action === 'edit' || $action === 'cadastrar') {
+    $id = $_GET['id'];
     $erros = [];
     //validação dos dados
     if (!$nome) {
@@ -38,7 +37,7 @@
     if (!$cep) {
         array_push($erros, "Necessario preencher o campo cep");
     }
-    if (!$tipoEnd) {
+    if ($tipoEnd == '...') {
         array_push($erros, "Necessario preencher o campo tipo de endereço");
     }
     if (!$nomeRua) {
@@ -56,22 +55,33 @@
     if (!$telefone2) {
         array_push($erros, "Necessario preencher o campo outro telefone");
     }
-    if (!$senha) {
+    if (!$senha && $action != 'edit') {
         array_push($erros, "Necessario preencher o campo senha");
     }
-    if (!$senhaConfirmar) {
+    if (!$senhaConfirmar && $action != 'edit') {
         array_push($erros, "Necessario preencher o campo confirmar senha");
     }
-    if ($senhaConfirmar != $senha) {
+    if ($senhaConfirmar != $senha && $action != 'edit') {
         array_push($erros, "Senhas não ceencidem");
     }
 
     $_SESSION['erros'] = $erros;
-    //se ouver erros será redirecionado a pagina de cadastro com os respectivos erros
     if (count($erros) > 0) {
-        header('Location: ../../index.php?page=cadastrar');
-    } else {
-        $usuario = new Usuario($nome, $sobrenome,$email,$cep,$tipoEnd,$nomeRua,$numero,$bairro,$telefone1,$telefone2,$senha);
-        $msg = $usuario->cadastrar();
-        echo $msg;
-    }
+        if($action === "edit"){
+            header('Location: ../../index.php?page=edit&id='.$id);
+        }else if($action === "cadastrar"){
+            header('Location: ../../index.php?page=cadastrar');
+        }
+        
+     }else{
+        if($action === "edit"){
+            $usuario = new Usuario($nome, $sobrenome, $email, $cep, $tipoEnd, $nomeRua, $numero, $bairro, $telefone1, $telefone2, $senha);
+            $_SESSION['msgSuccess'] = $usuario->editar($id);
+            header('Location: ../../index.php?page=home');
+        }else if($action === "cadastrar"){
+            $usuario = new Usuario($nome, $sobrenome, $email, $cep, $tipoEnd, $nomeRua, $numero, $bairro, $telefone1, $telefone2, $senha);
+            $_SESSION['msgSuccess'] = $usuario->cadastrar();
+            header('Location: ../../index.php?page=home');
+        }
+     }
+}
